@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="573260c1-3405-45c2-b615-64e75bab343f" name="Default Changelist" comment="" />
+    <list default="true" id="573260c1-3405-45c2-b615-64e75bab343f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/NaiveBayes.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/NaiveBayes.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,13 +27,18 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="ProjectId" id="1vd8aeJzKDaeCgwKvLfNEAhbKIz" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
   </component>
   <component name="RunManager">
@@ -57,64 +75,83 @@
     </task>
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="WindowStateProjectService">
     <state x="466" y="-775" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1627031954577">
       <screen x="-232" y="-1057" width="1920" height="1057" />
     </state>
     <state x="466" y="-775" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1627031954577" />
-    <state width="949" height="301" key="GridCell.Tab.0.bottom" timestamp="1627408746505">
+    <state x="410" y="264" key="#xdebugger.evaluate" timestamp="1628334798179">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="410" y="264" key="#xdebugger.evaluate/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1628334798179" />
+    <state width="1899" height="372" key="GridCell.Tab.0.bottom" timestamp="1628364345944">
       <screen x="-232" y="-1057" width="1920" height="1057" />
     </state>
-    <state width="949" height="301" key="GridCell.Tab.0.bottom/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1627408746505" />
-    <state width="949" height="301" key="GridCell.Tab.0.center" timestamp="1627408746503">
+    <state width="1899" height="372" key="GridCell.Tab.0.bottom/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1628364345944" />
+    <state width="1899" height="372" key="GridCell.Tab.0.center" timestamp="1628364345942">
       <screen x="-232" y="-1057" width="1920" height="1057" />
     </state>
-    <state width="949" height="301" key="GridCell.Tab.0.center/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1627408746503" />
-    <state width="949" height="301" key="GridCell.Tab.0.left" timestamp="1627408746502">
+    <state width="1899" height="372" key="GridCell.Tab.0.center/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1628364345942" />
+    <state width="1899" height="372" key="GridCell.Tab.0.left" timestamp="1628364345939">
       <screen x="-232" y="-1057" width="1920" height="1057" />
     </state>
-    <state width="949" height="301" key="GridCell.Tab.0.left/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1627408746502" />
-    <state width="949" height="301" key="GridCell.Tab.0.right" timestamp="1627408746504">
+    <state width="1899" height="372" key="GridCell.Tab.0.left/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1628364345939" />
+    <state width="1899" height="372" key="GridCell.Tab.0.right" timestamp="1628364345943">
       <screen x="-232" y="-1057" width="1920" height="1057" />
     </state>
-    <state width="949" height="301" key="GridCell.Tab.0.right/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1627408746504" />
-    <state width="949" height="301" key="GridCell.Tab.1.bottom" timestamp="1627408746511">
+    <state width="1899" height="372" key="GridCell.Tab.0.right/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1628364345943" />
+    <state width="1899" height="372" key="GridCell.Tab.1.bottom" timestamp="1628364381199">
       <screen x="-232" y="-1057" width="1920" height="1057" />
     </state>
-    <state width="949" height="301" key="GridCell.Tab.1.bottom/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1627408746511" />
-    <state width="949" height="301" key="GridCell.Tab.1.center" timestamp="1627408746507">
+    <state width="1899" height="372" key="GridCell.Tab.1.bottom/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1628364381199" />
+    <state width="1899" height="372" key="GridCell.Tab.1.center" timestamp="1628364381198">
       <screen x="-232" y="-1057" width="1920" height="1057" />
     </state>
-    <state width="949" height="301" key="GridCell.Tab.1.center/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1627408746507" />
-    <state width="949" height="301" key="GridCell.Tab.1.left" timestamp="1627408746506">
+    <state width="1899" height="372" key="GridCell.Tab.1.center/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1628364381198" />
+    <state width="1899" height="372" key="GridCell.Tab.1.left" timestamp="1628364381198">
       <screen x="-232" y="-1057" width="1920" height="1057" />
     </state>
-    <state width="949" height="301" key="GridCell.Tab.1.left/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1627408746506" />
-    <state width="949" height="301" key="GridCell.Tab.1.right" timestamp="1627408746510">
+    <state width="1899" height="372" key="GridCell.Tab.1.left/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1628364381198" />
+    <state width="1899" height="372" key="GridCell.Tab.1.right" timestamp="1628364381199">
       <screen x="-232" y="-1057" width="1920" height="1057" />
     </state>
-    <state width="949" height="301" key="GridCell.Tab.1.right/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1627408746510" />
+    <state width="1899" height="372" key="GridCell.Tab.1.right/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1628364381199" />
     <state width="960" height="528" key="XDebugger.FullValuePopup" timestamp="1627051068185">
       <screen x="-232" y="-1057" width="1920" height="1057" />
     </state>
     <state width="960" height="528" key="XDebugger.FullValuePopup/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1627051068185" />
-    <state x="393" y="-822" width="670" height="676" key="search.everywhere.popup" timestamp="1627034925115">
+    <state x="284" y="-793" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2" timestamp="1628352006746">
       <screen x="-232" y="-1057" width="1920" height="1057" />
     </state>
-    <state x="393" y="-822" width="670" height="676" key="search.everywhere.popup/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1627034925115" />
+    <state x="284" y="-793" key="com.intellij.xdebugger.impl.breakpoints.ui.BreakpointsDialogFactory$2/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1628352006746" />
+    <state x="393" y="-822" width="670" height="676" key="search.everywhere.popup" timestamp="1628273908977">
+      <screen x="-232" y="-1057" width="1920" height="1057" />
+    </state>
+    <state x="393" y="-822" width="670" height="676" key="search.everywhere.popup/-232.-1057.1920.1057/0.23.1440.877@-232.-1057.1920.1057" timestamp="1628273908977" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>17</line>
-          <option name="timeStamp" value="10" />
+          <line>18</line>
+          <option name="timeStamp" value="116" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/NaiveBayes.py</url>
-          <line>133</line>
-          <option name="timeStamp" value="34" />
+          <line>118</line>
+          <option name="timeStamp" value="118" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>

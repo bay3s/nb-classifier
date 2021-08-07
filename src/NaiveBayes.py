@@ -1,134 +1,127 @@
-import csv
-from copy import deepcopy
+import pandas as pd
+
 
 class NaiveBayes:
-  
-  def __init__(self, num_categories: int, vocab_file_location: str, training_data_location: str, training_labels_location: str, test_data_location: str, test_labels_location: str):
-    self.vocab_file_location = vocab_file_location
 
-    self.training_data_location = training_data_location
-    self.training_labels_location = training_labels_location
-
-    self.test_data_location = test_data_location
-    self.test_labels_location = test_labels_location
+  def __init__(
+    self,
+    vocab_path: str,
+    labels_path: str,
+    train_data_path: str,
+    train_labels_path: str,
+    test_data_path: str,
+    test_labels_path: str
+  ):
+    self.words = NaiveBayes.read_csv(vocab_path, columns = ['word'])
+    self.labels = NaiveBayes.read_csv(labels_path, columns = ['name'])
+ 
+    self.training_data = NaiveBayes.read_csv(train_data_path, columns = ['doc.id', 'word.id', 'count'])
+    self.training_data = self.training_data[['doc.id', 'word.id', 'count']].apply(pd.to_numeric)
     
-    self.vocabulary = dict()
+    self.training_labels = NaiveBayes.read_csv(train_labels_path, columns = ['label.id'])
+    self.training_labels = self.training_labels[['label.id']].apply(pd.to_numeric)
+    self.training_labels['doc.id'] = self.training_labels.index + 1
+    self.training_labels.set_index('doc.id')
 
-    self.training_labels = dict()
-    self.training_label_counts = dict()
-    
-    self.priors = dict()
-    self.joint_counts = dict()
-    self.posteriors = dict()
+    self.test_data = NaiveBayes.read_csv(test_data_path, columns = ['doc.id', 'word.id', 'count'])
+    self.test_data = self.test_data[['doc.id', 'word.id', 'count']].apply(pd.to_numeric)
 
-    self.test_labels = dict()
+    self.test_labels = NaiveBayes.read_csv(test_labels_path, columns = ['label.id'])
+    self.test_labels = self.test_labels[['label.id']].apply(pd.to_numeric)
     
-    self.smoothing_constant = 1
-    self.num_categories = num_categories
+    # P(Y)
+    self.priors = None
+    
+    # P(X | Y)
+    self.maximum_posteriori = None
+    self.smoothing = 1.0
   
   def train(self):
-    self.init_vocabulary()
-
-    self.init_training_labels()
     self.init_priors()
-    self.init_posteriors()
+    self.init_maximum_posteriori()
 
-  def init_training_labels(self, refresh = True) -> bool:
-    if refresh:
-      self.training_labels.clear()
-      self.training_label_counts.clear()
+  def init_maximum_posteriori(self):
+    self.maximum_posteriori = pd.DataFrame(columns = ['word.id', 'label.id', 'estimate'])
 
-    reader = csv.reader(open(self.training_labels_location))
-  
-    for index, row in enumerate(reader):
-      label = int(row[0])
-      self.training_labels[index + 1] = label
+    for label_idx, label in self.labels.iterrows():
+      label_id = label['id']
+      documents = self.training_labels[self.training_labels['label.id'] == label_id]
+      document_ids = documents['doc.id'].tolist()
 
-      if label not in self.training_label_counts.keys():
-        self.training_label_counts[label] = 0
+      filtered_data = self.training_data.loc[self.training_data['doc.id'].isin(document_ids)]
+      filtered_data.drop('doc.id', axis = 1, inplace = True)
+      aggregated = filtered_data.groupby('word.id').agg({'count': 'sum'})
 
-      self.training_label_counts[label] += 1
+      maximum_posteriori = pd.DataFrame({
+        'word.id': aggregated.index.values,
+        'label.id': [label_id] * len(aggregated),
+        'estimate': (aggregated['count'] + self.smoothing) / (aggregated['count'].sum() + len(self.words) * self.smoothing)
+      })
 
-    return True
+      self.maximum_posteriori = self.maximum_posteriori.append(maximum_posteriori)
 
-  def init_priors(self) -> bool:
-    for label in self.training_label_counts.keys():
-        self.priors[label] = float(self.training_label_counts[label] / len(self.training_labels))
+  def init_priors(self):
+    training_size = self.training_labels.nunique()['label.id']
 
-    return True
+    self.priors = pd.DataFrame(columns = ['label.id', 'prior'])
 
-  def init_test_labels(self, refresh = True) -> bool:
-    if refresh:
-      self.test_labels.clear()
+    self.priors['label.id'] = self.training_labels['label.id'].unique()
+    self.priors['prior'] = 0.0
 
-    reader = csv.reader(open(self.test_data_location))
-    for index, row in enumerate(reader):
-      label = int(row[0])
-      self.test_labels[index + 1] = label
+    label_counts = dict()
+    for idx, row in self.training_labels.iterrows():
+      label = row['label.id']
 
-    return True
+      if label not in label_counts.keys():
+        label_counts[label] = len(self.training_labels[self.training_labels['label.id'] == label])
 
-  def init_vocabulary(self) -> bool:
-    reader = csv.reader(open(self.vocab_file_location))
-    self.vocabulary.clear()
+      self.priors.loc[self.priors['label.id'] == label, 'prior'] = label_counts[label] / training_size
 
-    for index, row in enumerate(reader):
-        word = row[0]
-        self.vocabulary[index + 1] = word
+    pass
 
-    return True
+  def test(self):
+    documents = self.test_data['doc.id'].unique()
+    label_ids = self.labels['id'].unique()
+    predictions = list()
 
-  def get_posteriors_key(self, word_id: int, label: int):
-    return f'{word_id} & {label}'
+    for doc_id in documents:
+      word_ids = self.test_data[self.test_data['doc.id'] == doc_id]['word.id']
+      word_count = self.test_data[self.test_data['doc.id'] == doc_id]['count'].sum()
+      max_probability = 0.0
+      predicted_label = None
 
-  def init_posteriors(self):
-    training_data_reader = csv.reader(open(self.training_data_location))
-    training_data = list(enumerate(training_data_reader))
-    training_labels = list(self.training_labels.values())
-    joint_counts = dict()
+      for label_id in label_ids:
+        maximum_posteriori = self.maximum_posteriori[self.maximum_posteriori['label.id'] == label_id & self.maximum_posteriori['word.id'].isin(word_ids)]
+        likelihood = 0.0
 
-    for index, data in enumerate(training_data):
-      row_data = data[1][0].split()
-      doc = int(row_data[0])
-      word = int(row_data[1])
-      count = int(row_data[2])
+        for word_id in word_ids:
+          if maximum_posteriori[maximum_posteriori['word.id'] == word_id]['word.id'].any():
+            estimate = maximum_posteriori.loc[maximum_posteriori['word.id'] == word_id, 'estimate'].iloc[0]
+            if likelihood > 0.0:
+              likelihood = likelihood * estimate
+            else:
+              likelihood = estimate
+          else:
+            estimate = 1 / (word_count + len(self.words))
+            if likelihood > 0.0:
+              likelihood = likelihood * estimate
+            else:
+              likelihood = estimate
 
-      # adjusting for index
-      label = int(training_labels[doc - 1])
-      key = self.get_posteriors_key(word, label)
+        prior = self.priors.loc[self.priors['label.id'] == label_id, 'prior'].iloc[0]
+        current_probability = likelihood * prior
+        if current_probability > max_probability:
+          predicted_label = label_id
+          max_probability = current_probability
 
-      if key not in self.joint_counts.keys():
-        joint_counts[key] = count
-      joint_counts[key] += count
-  
-    for key, count in joint_counts.items():
-      label = int(key.split()[2])
-      self.posteriors[key] = (count + self.smoothing_constant) / (self.training_label_counts[label] + self.smoothing_constant * self.num_categories)
+      predictions.append(predicted_label)
 
-  def run_classifier(self) -> dict:
-    test_data_reader = csv.reader(open(self.test_data_location))
-    test_data = list(enumerate(test_data_reader))
-    likelihood_estimates = dict()
+    return predictions
 
-    for index, data in enumerate(test_data):
-      row_data = data[1][0].split()
-      doc = int(row_data[0])
-      word = int(row_data[1])
+  @staticmethod
+  def read_csv(file: str, columns: list, converters: dict = {}):
+    df = pd.read_csv(file, names = columns, sep = ' ', converters = converters)
+    df.insert(0, 'id', df.index + 1)
+    df.set_index('id')
 
-      if doc not in likelihood_estimates.keys():
-        likelihood_estimates[doc] = deepcopy(self.priors)
-
-      for label in likelihood_estimates[doc].keys():
-        posteriors_key = self.get_posteriors_key(word, label)
-
-        if posteriors_key in self.posteriors.keys():
-          likelihood_estimates[doc][label] = likelihood_estimates[doc][label] * self.posteriors[posteriors_key]
-        else:
-          likelihood_estimates[doc][label] = likelihood_estimates[doc][label] * self.smoothing_constant / (self.training_label_counts[label] + self.smoothing_constant * self.num_categories)
-
-    results = dict()
-    for doc in likelihood_estimates.keys():
-      max_probability = max(likelihood_estimates[doc], key = lambda k: likelihood_estimates[doc].get(k))
-      results[doc] = max_probability
-
-    return results
+    return df
